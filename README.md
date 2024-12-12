@@ -1,4 +1,4 @@
-[![MasterHead](https://thumbs.dreamstime.com/b/python-programming-colorful-plexus-design-python-language-programming-banner-colorful-plexus-design-software-technology-166200238.jpg)]
+![MasterHead](https://thumbs.dreamstime.com/b/python-programming-colorful-plexus-design-python-language-programming-banner-colorful-plexus-design-software-technology-166200238.jpg)
 
 
 <h1 align="center">Hi 👋, I'm Nahim Uddin</h1>
