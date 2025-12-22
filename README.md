@@ -8,13 +8,13 @@
 
 <p align="left"> <a href="https://twitter.com/@nahim_uddin_" target="blank"><img src="https://img.shields.io/twitter/follow/@nahim_uddin_?logo=twitter&style=for-the-badge" alt="@nahim_uddin_" /></a> </p>
 
-- 🔭 I’m currently working on **Django and Springboot**
+- 🔭 I’m currently working on **Django , FastAPI and Blacksheep**
 
-- 🌱 I’m currently learning **React,Django,Springboot**
+- 🌱 I’m currently learning **React,Django,Blacksheep**
 
 - 👨‍💻 All of my projects are available at [https://nahimportfolio.netlify.app/](https://nahimportfolio.netlify.app/)
 
-- 💬 Ask me about **React and python**
+- 💬 Ask me about **python and SQL**
 
 - 📫 How to reach me **nahim.211902019@gmail.com**
 
