@@ -104,7 +104,7 @@ I design and ship **production backend systems** — APIs, data layers, and serv
 </p>
 
 <p align="center">
-  <img src="https://streak-stats.demolab.com?user=UddinNahim&theme=tokyonight&hide_border=true" alt="GitHub streak" />
+  <img src="./profile/streak.svg" alt="GitHub streak" />
 </p>
 
 <p align="center">
