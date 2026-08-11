@@ -1,6 +1,6 @@
 <h1 align="center">Nahim Uddin</h1>
 <p align="center">
-  <b>Backend Engineer</b> · Python · Microservices · Bangladesh
+  <b>Backend Engineer</b> · Python · APIs · Microservices · Bangladesh
 </p>
 
 <p align="center">
@@ -16,9 +16,25 @@
 
 ---
 
+### About
+
+I build **backend systems in Python** — REST APIs, service boundaries, Postgres data models, and Dockerized deployments.
+
+I usually own the path from **API → database → cache/async work**, with clear auth and reliable request flows.
+
+- 🔭 **Building:** FastAPI, BlackSheep, and Django/DRF backends
+- 🧩 **Focus:** API design, SQL/Postgres, auth, caching, background jobs
+- 🌱 **Exploring:** event-driven services, OIDC / gateway auth, search with Meilisearch
+- 💬 **Ask me about:** Python backends, PostgreSQL, FastAPI/BlackSheep, Docker
+- 👨‍💻 **Portfolio:** [nahimportfolio.netlify.app](https://nahimportfolio.netlify.app/)
+- 📫 **Email:** nahim.211902019@gmail.com
+- ⚡ **Fun fact:** when I sit down to practice, music wins more rounds than the skills 😂
+
+---
+
 ### System design
 
-A sample backend layout with the stack I work with day to day.
+Sample architecture for the stack I work with. I typically own the **API → data → async** path.
 
 ```mermaid
 flowchart TB
@@ -65,16 +81,16 @@ flowchart TB
 
 ---
 
-### About
+### Featured work
 
-I design and ship **production backend systems** — APIs, data layers, and service boundaries with Python.
-
-- 🔭 **Working on:** Django, FastAPI, and BlackSheep backends
-- 🌱 **Learning:** React, event-driven services, auth / OIDC flows
-- 💬 **Ask me about:** Python, SQL, REST APIs, microservice basics
-- 👨‍💻 **Portfolio:** [nahimportfolio.netlify.app](https://nahimportfolio.netlify.app/)
-- 📫 **Email:** nahim.211902019@gmail.com
-- ⚡ **Fun fact:** when I sit down to practice, music wins more rounds than the skills 😂
+| Project | Stack | What it shows |
+|--------|--------|----------------|
+| [Clinic Management API](https://github.com/UddinNahim/Clinic-Management-using-fastapi) | FastAPI · Python | Domain APIs, request validation, service structure |
+| [E-Commerce Platform](https://github.com/UddinNahim/E-Commerce-Website-) | Django · Python | Full backend flows for catalog, auth, and orders |
+| [BlackSheep Learning](https://github.com/UddinNahim/blacksheep-learning) | BlackSheep · Python | Async API patterns with a modern Python framework |
+| [Apache Kafka Practice](https://github.com/UddinNahim/Apache-Kafka) | Python · Kafka | Producers/consumers and event-driven basics |
+| [Backend Recap](https://github.com/UddinNahim/backend-_development_recape) | Python | Core backend patterns and API practice |
+| [DSA Journey](https://github.com/UddinNahim/DSAJourney) | Python | Algorithms and problem-solving practice |
 
 ---
 
