@@ -1,7 +1,3 @@
-<div align="center">
-  <img src="https://thumbs.dreamstime.com/b/python-programming-colorful-plexus-design-python-language-programming-banner-colorful-plexus-design-software-technology-166200238.jpg" alt="banner" width="100%" />
-</div>
-
 <h1 align="center">Nahim Uddin</h1>
 <p align="center">
   <b>Backend Engineer</b> · Python · APIs · Microservices · Bangladesh
