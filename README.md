@@ -16,93 +16,69 @@
 
 ---
 
-### System design I build around
+### System design
 
-Event-driven LMS commerce: checkout stays fast, fulfillment stays reliable.
-
-```mermaid
-flowchart LR
-  subgraph Edge["Edge"]
-    C[Client]
-    G[API Gateway<br/>Auth Context]
-  end
-
-  subgraph Services["Microservices"]
-    PKG[Package Service<br/>FastAPI]
-    CRS[Course Service<br/>BlackSheep]
-    ORD[Order Service<br/>BlackSheep]
-    PAY[Payment Service<br/>BlackSheep]
-  end
-
-  subgraph Data["Data & Infra"]
-    PG[(PostgreSQL<br/>+ Outbox)]
-    CACHE[(Valkey / Redis)]
-    BUS{{Event Bus<br/>s2-lite}}
-    SEARCH[(Meilisearch)]
-  end
-
-  subgraph Provider["External"]
-    SSL[SSLCommerz]
-  end
-
-  C --> G
-  G --> PKG & CRS & ORD & PAY
-  PKG & CRS & ORD & PAY --> PG
-  PKG & CRS --> CACHE
-  PKG & CRS --> SEARCH
-
-  ORD -->|create payment| PAY
-  PAY -->|redirect / IPN| SSL
-  SSL -->|payment.paid| PAY
-  PAY -->|outbox| BUS
-  BUS -->|COURSE / PACKAGE_PURCHASED| CRS & PKG
-```
+A sample backend layout with the stack I work with day to day.
 
 ```mermaid
-sequenceDiagram
-  autonumber
-  actor User
-  participant Order as Order Service
-  participant Pay as Payment Service
-  participant PG as Postgres + Outbox
-  participant Bus as Event Bus
-  participant Course as Course Service
+flowchart TB
+  subgraph Clients
+    WEB[React / Web]
+    API_CLIENT[Mobile / API clients]
+  end
 
-  User->>Order: Checkout
-  Order->>Pay: Create payment
-  Pay-->>User: Redirect to gateway
-  User->>Pay: IPN / return callback
-  Pay->>PG: Mark paid + write outbox
-  PG-->>Bus: Publish payment.paid
-  Bus->>Order: Fulfill order
-  Order->>PG: Write COURSE_PURCHASED
-  PG-->>Bus: Publish purchase event
-  Bus->>Course: Enroll learner
-  Course-->>User: Access granted
+  subgraph Edge
+    GW[API Gateway / Auth]
+  end
+
+  subgraph App["Application Layer"]
+    BS[BlackSheep APIs]
+    FA[FastAPI services]
+    DJ[Django / DRF]
+  end
+
+  subgraph Async["Async & Search"]
+    QUEUE[Workers / Tasks]
+    SEARCH[Meilisearch]
+  end
+
+  subgraph Data
+    PG[(PostgreSQL)]
+    REDIS[(Redis / Valkey)]
+  end
+
+  subgraph Ops
+    DOCKER[Docker]
+    RUST[Rust tooling / Auth]
+  end
+
+  WEB --> GW
+  API_CLIENT --> GW
+  GW --> BS & FA & DJ
+  BS & FA & DJ --> PG
+  BS & FA --> REDIS
+  FA --> QUEUE
+  BS & FA --> SEARCH
+  DOCKER -.-> App
+  RUST -.-> GW
 ```
 
 ---
 
 ### About
 
-I design and ship **production backend systems** — APIs, payments, and event-driven services for learning platforms.
+I design and ship **production backend systems** — APIs, data layers, and service boundaries with Python.
 
-Right now I’m building **Flyger LMS**: course, package, order, and payment microservices that turn checkout into enrollment with a transactional outbox.
-
----
-
-### What I work on
-
-- 🔭 **Building:** Flyger LMS microservices with **BlackSheep** & **FastAPI**
-- 🧩 **Patterns:** gateway-forwarded auth, permission context, transactional outbox
-- 🌱 **Deepening:** event-driven fulfillment, OIDC / IdP flows, payment provider IPNs
-- 💬 **Ask me about:** Python backends, SQL, BlackSheep vs FastAPI, microservice design
+- 🔭 **Working on:** Django, FastAPI, and BlackSheep backends
+- 🌱 **Learning:** React, event-driven services, auth / OIDC flows
+- 💬 **Ask me about:** Python, SQL, REST APIs, microservice basics
+- 👨‍💻 **Portfolio:** [nahimportfolio.netlify.app](https://nahimportfolio.netlify.app/)
 - 📫 **Email:** nahim.211902019@gmail.com
 - ⚡ **Fun fact:** when I sit down to practice, music wins more rounds than the skills 😂
 
 ---
 
-### Backend stack
+### Tech I use
 
 <p align="left">
   <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
@@ -121,7 +97,6 @@ Right now I’m building **Flyger LMS**: course, package, order, and payment mic
 
 ### GitHub stats
 
-<!-- Public github-readme-stats.vercel.app is often paused; these mirrors stay online. -->
 <p align="center">
   <img height="180" src="https://github-readme-stats-fast.vercel.app/api?username=UddinNahim&show_icons=true&theme=tokyonight&hide_border=true&count_private=true" alt="UddinNahim GitHub stats" />
   &nbsp;&nbsp;
