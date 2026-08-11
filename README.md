@@ -1,7 +1,3 @@
-<div align="center">
-  <img src="https://thumbs.dreamstime.com/b/python-programming-colorful-plexus-design-python-language-programming-banner-colorful-plexus-design-software-technology-166200238.jpg" alt="banner" width="100%" />
-</div>
-
 <h1 align="center">Nahim Uddin</h1>
 <p align="center">
   <b>Backend Engineer</b> · Python · Microservices · Bangladesh
@@ -20,17 +16,78 @@
 
 ---
 
+### System design I build around
+
+Event-driven LMS commerce: checkout stays fast, fulfillment stays reliable.
+
+```mermaid
+flowchart LR
+  subgraph Edge["Edge"]
+    C[Client]
+    G[API Gateway<br/>Auth Context]
+  end
+
+  subgraph Services["Microservices"]
+    PKG[Package Service<br/>FastAPI]
+    CRS[Course Service<br/>BlackSheep]
+    ORD[Order Service<br/>BlackSheep]
+    PAY[Payment Service<br/>BlackSheep]
+  end
+
+  subgraph Data["Data & Infra"]
+    PG[(PostgreSQL<br/>+ Outbox)]
+    CACHE[(Valkey / Redis)]
+    BUS{{Event Bus<br/>s2-lite}}
+    SEARCH[(Meilisearch)]
+  end
+
+  subgraph Provider["External"]
+    SSL[SSLCommerz]
+  end
+
+  C --> G
+  G --> PKG & CRS & ORD & PAY
+  PKG & CRS & ORD & PAY --> PG
+  PKG & CRS --> CACHE
+  PKG & CRS --> SEARCH
+
+  ORD -->|create payment| PAY
+  PAY -->|redirect / IPN| SSL
+  SSL -->|payment.paid| PAY
+  PAY -->|outbox| BUS
+  BUS -->|COURSE / PACKAGE_PURCHASED| CRS & PKG
+```
+
+```mermaid
+sequenceDiagram
+  autonumber
+  actor User
+  participant Order as Order Service
+  participant Pay as Payment Service
+  participant PG as Postgres + Outbox
+  participant Bus as Event Bus
+  participant Course as Course Service
+
+  User->>Order: Checkout
+  Order->>Pay: Create payment
+  Pay-->>User: Redirect to gateway
+  User->>Pay: IPN / return callback
+  Pay->>PG: Mark paid + write outbox
+  PG-->>Bus: Publish payment.paid
+  Bus->>Order: Fulfill order
+  Order->>PG: Write COURSE_PURCHASED
+  PG-->>Bus: Publish purchase event
+  Bus->>Course: Enroll learner
+  Course-->>User: Access granted
+```
+
+---
+
 ### About
 
 I design and ship **production backend systems** — APIs, payments, and event-driven services for learning platforms.
 
-Right now I’m building **Flyger LMS**: course, package, order, and payment microservices that turn checkout into enrollment.
-
-```text
-Packages / Courses  →  Orders  →  Payments (SSLCommerz)  →  Enrollment
-         ▲                 │                │
-         └──── event bus / transactional outbox ────┘
-```
+Right now I’m building **Flyger LMS**: course, package, order, and payment microservices that turn checkout into enrollment with a transactional outbox.
 
 ---
 
