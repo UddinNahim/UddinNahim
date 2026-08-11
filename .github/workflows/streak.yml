@@ -4,14 +4,13 @@ on:
   schedule:
     - cron: "0 3 * * *"
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - ".github/workflows/streak.yml"
 
 permissions:
   contents: write
+
+concurrency:
+  group: streak-stats
+  cancel-in-progress: true
 
 jobs:
   generate:
@@ -37,4 +36,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "chore: update streak stats"
+          git pull --rebase origin main
           git push
