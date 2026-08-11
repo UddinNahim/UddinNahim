@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="https://thumbs.dreamstime.com/b/python-programming-colorful-plexus-design-python-language-programming-banner-colorful-plexus-design-software-technology-166200238.jpg" alt="banner" width="100%" />
+</div>
+
 <h1 align="center">Nahim Uddin</h1>
 <p align="center">
   <b>Backend Engineer</b> · Python · APIs · Microservices · Bangladesh
@@ -34,49 +38,57 @@ I usually own the path from **API → database → cache/async work**, with clea
 
 ### System design
 
-Sample architecture for the stack I work with. I typically own the **API → data → async** path.
+How I structure backend work: **APIs → SQL (ORM + raw queries) → Postgres**.
 
 ```mermaid
-flowchart TB
+flowchart LR
   subgraph Clients
     WEB[React / Web]
-    API_CLIENT[Mobile / API clients]
+    APP[API clients]
   end
 
-  subgraph Edge
-    GW[API Gateway / Auth]
-  end
-
-  subgraph App["Application Layer"]
-    BS[BlackSheep APIs]
-    FA[FastAPI services]
+  subgraph APIs["API Layer"]
+    FA[FastAPI]
+    BS[BlackSheep]
     DJ[Django / DRF]
   end
 
-  subgraph Async["Async & Search"]
-    QUEUE[Workers / Tasks]
-    SEARCH[Meilisearch]
+  subgraph Query["Data Access"]
+    ORM[ORM / Query Builder<br/>Piccolo · Django ORM]
+    RAW[Raw SQL<br/>parameterized queries]
   end
 
-  subgraph Data
+  subgraph Store["Storage"]
     PG[(PostgreSQL)]
-    REDIS[(Redis / Valkey)]
+    REDIS[(Redis / Valkey cache)]
   end
 
-  subgraph Ops
-    DOCKER[Docker]
-    RUST[Rust tooling / Auth]
-  end
+  WEB --> FA & BS & DJ
+  APP --> FA & BS & DJ
+  FA & BS & DJ --> ORM
+  FA & BS & DJ --> RAW
+  ORM --> PG
+  RAW --> PG
+  FA & BS --> REDIS
+```
 
-  WEB --> GW
-  API_CLIENT --> GW
-  GW --> BS & FA & DJ
-  BS & FA & DJ --> PG
-  BS & FA --> REDIS
-  FA --> QUEUE
-  BS & FA --> SEARCH
-  DOCKER -.-> App
-  RUST -.-> GW
+```sql
+-- Example: API handler path uses SQL + raw query when needed
+-- GET /orders?user_id=42
+
+-- ORM / query builder (simple reads)
+SELECT id, status, total
+FROM orders
+WHERE user_id = 42
+ORDER BY created_at DESC;
+
+-- Raw SQL (joins / reporting / performance-sensitive paths)
+SELECT o.id, o.status, SUM(oi.qty * oi.price) AS line_total
+FROM orders o
+JOIN order_items oi ON oi.order_id = o.id
+WHERE o.user_id = $1
+  AND o.status = 'paid'
+GROUP BY o.id, o.status;
 ```
 
 ---
